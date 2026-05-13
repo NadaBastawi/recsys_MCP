@@ -1,0 +1,58 @@
+[
+  {
+    "customer_id": "C0001",
+    "service_id": "S01",
+    "score": 0.85,
+    "urgency": 7,
+    "timestamp": "2026-05-06T19:31:45.033192"
+  },
+  {
+    "customer_id": "C0002",
+    "service_id": "S02",
+    "score": 0.92,
+    "urgency": 8,
+    "timestamp": "2026-05-06T19:31:45.035929"
+  },
+  {
+    "customer_id": "C0003",
+    "service_id": "S03",
+    "score": 0.78,
+    "urgency": 6,
+    "timestamp": "2026-05-06T19:31:45.044803"
+  },
+  {
+    "customer_id": "C0001",
+    "service_id": "S01",
+    "score": 0.85,
+    "urgency": 7,
+    "timestamp": "2026-05-06T19:35:36.779042"
+  },
+  {
+    "customer_id": "C0002",
+    "service_id": "S02",
+    "score": 0.92,
+    "urgency": 8,
+    "timestamp": "2026-05-06T19:35:36.846232"
+  },
+  {
+    "customer_id": "C0003",
+    "service_id": "S03",
+    "score": 0.78,
+    "urgency": 6,
+    "timestamp": "2026-05-06T19:35:37.172780"
+  },
+  {
+    "customer_id": "C0004",
+    "service_id": "S05",
+    "score": 0.88,
+    "urgency": 7,
+    "timestamp": "2026-05-06T19:35:37.236220"
+  },
+  {
+    "customer_id": "C0005",
+    "service_id": "S07",
+    "score": 0.91,
+    "urgency": 9,
+    "timestamp": "2026-05-06T19:35:37.288723"
+  }
+]

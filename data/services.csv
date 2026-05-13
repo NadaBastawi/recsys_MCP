@@ -1,0 +1,11 @@
+service_id,service_name,price_usd,category,suitable_residential,suitable_commercial,peak_season
+S01,General Pest Control,120,general,True,True,year-round
+S02,Termite Inspection,150,termite,True,False,spring-summer
+S03,Termite Treatment,800,termite,True,False,spring-summer
+S04,Bed Bug Treatment,400,bed_bug,True,False,year-round
+S05,Rodent Control,200,rodent,True,True,year-round
+S06,Scorpion Control,180,scorpion,True,False,spring-summer
+S07,Ant & Cockroach Treatment,130,ant_roach,True,True,year-round
+S08,Commercial Pest Management,500,commercial,False,True,year-round
+S09,Preventive Maintenance Plan,300,preventive,True,True,year-round
+S10,Emergency Pest Response,250,emergency,True,True,year-round
