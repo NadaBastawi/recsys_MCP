@@ -11,9 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY Requirements.txt ./
+COPY requirements.txt ./
 RUN python -m pip install --upgrade pip setuptools wheel
-RUN python -m pip install --no-cache-dir -r Requirements.txt
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
