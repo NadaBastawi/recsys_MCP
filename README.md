@@ -45,6 +45,11 @@ This system uses machine learning to:
 │         │ (GradientBoosting,     │                   │
 │         │  RMSE: 0.867)          │                   │
 │         └────────────────────────┘                   │
+│                      ▼                               │
+│         ┌────────────────────────┐                   │
+│         │ Drift Monitoring       │                   │
+│         │ (KS test + PSI)        │                   │
+│         └────────────────────────┘                   │
 └─────────────────────────────────────────────────────┘
                         │
 ┌───────────────────────▼─────────────────────────────┐
@@ -94,6 +99,8 @@ torco_recsys/
 ---
 
 ## Setup & Run
+
+CI runs automatically for pushes and pull requests to the main branch via GitHub Actions, and the test suite is exercised with pytest in the workflow.
 
 ```bash
 # Install dependencies
@@ -155,6 +162,9 @@ No real TORCO data is publicly available. The synthetic generator models real So
 
 **Why MCP?**
 Exposes the recommender to AI agents natively. A TORCO support agent or scheduling AI can query "what does this customer need?" without writing API calls.
+
+**Why monitoring?**
+The monitoring module tracks prediction drift with KS tests and PSI to surface shifts in customer behavior or service demand over time, helping keep the recommender reliable in production.
 
 ---
 
