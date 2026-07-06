@@ -12,9 +12,10 @@ import numpy as np
 @pytest.fixture
 def sample_data():
     """Load sample data for testing."""
-    customers = pd.read_csv('customers.csv')
-    interactions = pd.read_csv('interactions.csv')
-    services = pd.read_csv('services.csv')
+    data_dir = 'data'
+    customers = pd.read_csv(f'{data_dir}/customers.csv')
+    interactions = pd.read_csv(f'{data_dir}/interactions.csv')
+    services = pd.read_csv(f'{data_dir}/services.csv')
     return customers, interactions, services
 
 

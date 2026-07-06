@@ -4,6 +4,8 @@ Generates realistic customer, property, service, and interaction data
 based on real-world pest control patterns in Tucson, AZ / Southwest US
 """
 
+import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 from faker import Faker
@@ -206,23 +208,26 @@ def generate_services_df():
 # ── MAIN ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    output_dir = Path(__file__).resolve().parent / "data"
+    output_dir.mkdir(exist_ok=True)
+
     print("Generating customers...")
     customers = generate_customers(500)
-    customers.to_csv("customers.csv", index=False)
+    customers.to_csv(output_dir / "customers.csv", index=False)
     print(f"  ✓ {len(customers)} customers")
 
     print("Generating interactions...")
     interactions = generate_interactions(customers, 3000)
-    interactions.to_csv("interactions.csv", index=False)
+    interactions.to_csv(output_dir / "interactions.csv", index=False)
     print(f"  ✓ {len(interactions)} interactions")
 
     print("Generating services catalog...")
     services = generate_services_df()
-    services.to_csv("services.csv", index=False)
+    services.to_csv(output_dir / "services.csv", index=False)
     print(f"  ✓ {len(services)} services")
 
     print("\nSample customer:")
     print(customers.head(2).to_string())
     print("\nSample interactions:")
     print(interactions.head(3).to_string())
-    print("\nDone. Files saved: customers.csv, interactions.csv, services.csv")
+    print(f"\nDone. Files saved in {output_dir}")
