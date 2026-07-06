@@ -171,3 +171,7 @@ The monitoring module tracks prediction drift with KS tests and PSI to surface s
 ## Tech Stack
 
 `Python` `scikit-learn` `FastAPI` `pandas` `numpy` `joblib` `httpx` `MCP Protocol`
+
+## License
+
+This project is licensed under the MIT License — see the LICENSE file for details.
