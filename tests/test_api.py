@@ -56,6 +56,8 @@ class TestAPIHealth:
         
         assert "status" in data, "Missing 'status' field"
         assert data["status"] in ["ok", "healthy"], "Invalid status value"
+        assert "model_loaded" in data, "Missing 'model_loaded' field"
+        assert isinstance(data["model_loaded"], bool), "model_loaded should be boolean"
 
 
 class TestRecommendationEndpoint:
