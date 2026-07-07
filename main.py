@@ -2,6 +2,7 @@
 TORCO Pest Control — Recommendation API
 FastAPI service exposing the hybrid recommender
 """
+import logging
 import os
 import sys
 from typing import List, Optional
@@ -17,6 +18,8 @@ from monitoring.logger import PredictionLogger
 
 load_dotenv()
 
+logger = logging.getLogger(__name__)
+
 # Configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.getenv("MODEL_DIR", os.path.join(BASE_DIR, "models"))
@@ -24,6 +27,8 @@ DATA_DIR = os.getenv("DATA_DIR", os.path.join(BASE_DIR, "data"))
 API_KEY = os.getenv("API_KEY", "")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 API_PORT = int(os.getenv("API_PORT", "8000"))
+
+logging.basicConfig(level=getattr(logging, LOG_LEVEL.upper(), logging.INFO), format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
 # Add model directory to path for imports
 if MODEL_DIR not in sys.path:
@@ -50,9 +55,9 @@ class RecommenderManager:
         try:
             if os.path.exists(model_path):
                 self._recommender = joblib.load(model_path)
-                print("✓ Loaded saved model")
+                logger.info("Loaded saved model")
             else:
-                print("Saved model not found. Training new model for API startup...")
+                logger.info("Saved model not found. Training new model for API startup...")
                 customers = pd.read_csv(os.path.join(DATA_DIR, "customers.csv"))
                 interactions = pd.read_csv(os.path.join(DATA_DIR, "interactions.csv"))
                 services = pd.read_csv(os.path.join(DATA_DIR, "services.csv"))
@@ -60,9 +65,9 @@ class RecommenderManager:
                 self._recommender.fit(customers, interactions, services)
                 os.makedirs(MODEL_DIR, exist_ok=True)
                 joblib.dump(self._recommender, model_path)
-                print("✓ Trained and saved new model")
+                logger.info("Trained and saved new model")
         except Exception as e:
-            print(f"Error loading/training model: {e}")
+            logger.exception("Error loading or training model: %s", e)
             raise
     
     @property
