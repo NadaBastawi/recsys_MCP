@@ -26,6 +26,7 @@ seaborn>=0.13.0
 # ── Testing ───────────────────────────────────────────────────────────────────
 pytest>=8.0.0
 httpx>=0.27.0          # required for FastAPI TestClient
+python-dotenv>=1.0.0
 
 # ── Monitoring ────────────────────────────────────────────────────────────────
 # scipy already covers KS test and PSI calculations

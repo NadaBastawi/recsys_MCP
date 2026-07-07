@@ -8,15 +8,22 @@ from typing import List, Optional
 
 import joblib
 import pandas as pd
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from recommender import HybridRecommender
 from monitoring.logger import PredictionLogger
+
+load_dotenv()
+
 # Configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_DIR = os.path.join(BASE_DIR, "models")
-DATA_DIR = os.path.join(BASE_DIR, "data")
+MODEL_DIR = os.getenv("MODEL_DIR", os.path.join(BASE_DIR, "models"))
+DATA_DIR = os.getenv("DATA_DIR", os.path.join(BASE_DIR, "data"))
+API_KEY = os.getenv("API_KEY", "")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+API_PORT = int(os.getenv("API_PORT", "8000"))
 
 # Add model directory to path for imports
 if MODEL_DIR not in sys.path:
