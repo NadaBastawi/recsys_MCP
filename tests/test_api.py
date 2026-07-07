@@ -104,7 +104,7 @@ class TestRecommendationEndpoint:
             "days_since_last_service": 200
         }
         
-        response = api_client.post("/recommend", json=payload)
+        response = api_client.post("/recommend", json=payload, headers=get_auth_headers())
         data = response.json()
         
         assert "customer_id" in data, "Missing 'customer_id' in response"
@@ -123,7 +123,7 @@ class TestRecommendationEndpoint:
             "days_since_last_service": 200
         }
         
-        response = api_client.post("/recommend", json=payload)
+        response = api_client.post("/recommend", json=payload, headers=get_auth_headers())
         data = response.json()
         
         if len(data["recommendations"]) > 0:
@@ -144,7 +144,7 @@ class TestRecommendationEndpoint:
             "days_since_last_service": 200
         }
         
-        response = api_client.post("/recommend", json=payload)
+        response = api_client.post("/recommend", json=payload, headers=get_auth_headers())
         # Should either return 404 or fall back to cold-start (200)
         # Check API implementation to determine expected behavior
         assert response.status_code in [200, 404], \
@@ -166,7 +166,7 @@ class TestNewCustomerEndpoint:
             "season": "spring"
         }
         
-        response = api_client.post("/recommend/new-customer", json=payload)
+        response = api_client.post("/recommend/new-customer", json=payload, headers=get_auth_headers())
         assert response.status_code == 200, \
             f"Expected 200, got {response.status_code}: {response.text}"
 
@@ -182,7 +182,7 @@ class TestNewCustomerEndpoint:
             "season": "spring"
         }
         
-        response = api_client.post("/recommend/new-customer", json=payload)
+        response = api_client.post("/recommend/new-customer", json=payload, headers=get_auth_headers())
         data = response.json()
         
         assert "recommendations" in data, "Missing 'recommendations' in response"
@@ -228,7 +228,7 @@ class TestNewCustomerEndpoint:
             "season": "spring"
         }
         
-        response = api_client.post("/recommend/new-customer", json=payload)
+        response = api_client.post("/recommend/new-customer", json=payload, headers=get_auth_headers())
         assert response.status_code == 422, \
             f"Expected 422 for missing field, got {response.status_code}"
 
