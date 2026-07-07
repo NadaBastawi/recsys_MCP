@@ -18,6 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 @pytest.fixture(scope="module")
 def api_client():
     """Create a test client for the FastAPI app."""
+    os.environ.setdefault("API_KEY", "test-api-key")
     # Note: In CI/CD, the API should be running on localhost:8000
     # For local testing, we can use the app directly
     try:
@@ -27,6 +28,11 @@ def api_client():
     except ImportError:
         # Fall back to HTTP client if app not available
         return None
+
+
+def get_auth_headers():
+    """Return authenticated request headers for protected endpoints."""
+    return {"X-API-Key": os.getenv("API_KEY", "test-api-key")}
 
 
 class TestAPIHealth:
@@ -55,6 +61,21 @@ class TestAPIHealth:
 class TestRecommendationEndpoint:
     """Test suite for /recommend endpoint."""
 
+    def test_recommend_requires_api_key(self, api_client):
+        """Test that /recommend rejects requests without an API key."""
+        if api_client is None:
+            pytest.skip("API not available")
+
+        payload = {
+            "customer_id": "C0001",
+            "season": "summer",
+            "days_since_last_service": 200
+        }
+
+        response = api_client.post("/recommend", json=payload)
+        assert response.status_code == 401, \
+            f"Expected 401, got {response.status_code}: {response.text}"
+
     def test_recommend_existing_customer_200(self, api_client):
         """Test that /recommend returns 200 for existing customer."""
         if api_client is None:
@@ -66,7 +87,7 @@ class TestRecommendationEndpoint:
             "days_since_last_service": 200
         }
         
-        response = api_client.post("/recommend", json=payload)
+        response = api_client.post("/recommend", json=payload, headers=get_auth_headers())
         assert response.status_code == 200, \
             f"Expected 200, got {response.status_code}: {response.text}"
 
@@ -189,7 +210,7 @@ class TestNewCustomerEndpoint:
                 "season": "spring"
             }
             
-            response = api_client.post("/recommend/new-customer", json=payload)
+            response = api_client.post("/recommend/new-customer", json=payload, headers=get_auth_headers())
             assert response.status_code == 200, \
                 f"Failed for property_type: {prop_type}"
 

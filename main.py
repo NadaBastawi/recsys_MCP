@@ -9,7 +9,7 @@ from typing import List, Optional
 import joblib
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel
 
 from recommender import HybridRecommender
@@ -73,6 +73,18 @@ class RecommenderManager:
 # Initialize recommender manager
 recommender_manager = RecommenderManager()
 
+
+def require_api_key(x_api_key: Optional[str] = Header(default=None, alias="X-API-Key")):
+    """Ensure protected endpoints receive a valid API key."""
+    expected_key = API_KEY
+    if expected_key and x_api_key != expected_key:
+        raise HTTPException(status_code=401, detail="Invalid or missing API key")
+    if not expected_key and x_api_key is None:
+        return None
+    if x_api_key is None:
+        raise HTTPException(status_code=401, detail="Invalid or missing API key")
+    return None
+
 # ── SCHEMAS ───────────────────────────────────────────────────────────────────
 
 class RecommendRequest(BaseModel):
@@ -115,14 +127,14 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "healthy", "model_loaded": recommender_manager.recommender is not None}
+    return {"status": "ok", "model_loaded": recommender_manager.recommender is not None}
 
 @app.get("/services")
 def list_services():
     return [dict(service_id=k, **v) for k, v in recommender_manager.recommender.services_dict.items()]
 
 @app.post("/recommend", response_model=RecommendResponse)
-def recommend_for_existing_customer(request: RecommendRequest):
+def recommend_for_existing_customer(request: RecommendRequest, _=Depends(require_api_key)):
     """
     Get service recommendations for an existing customer by ID.
     Uses their full history and profile for personalized recommendations.
@@ -143,7 +155,7 @@ def recommend_for_existing_customer(request: RecommendRequest):
     )
 
 @app.post("/recommend/new-customer")
-def recommend_for_new_customer(request: NewCustomerRequest):
+def recommend_for_new_customer(request: NewCustomerRequest, _=Depends(require_api_key)):
     """
     Get recommendations for a new customer with no history.
     Falls back to content-based filtering using property profile.

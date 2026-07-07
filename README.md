@@ -127,6 +127,7 @@ cd mcp && python server.py
 ```bash
 curl -X POST http://localhost:8000/recommend \
   -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key-here" \
   -d '{"customer_id": "C0001", "season": "summer", "days_since_last_service": 200}'
 ```
 
@@ -134,6 +135,7 @@ curl -X POST http://localhost:8000/recommend \
 ```bash
 curl -X POST http://localhost:8000/recommend/new-customer \
   -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key-here" \
   -d '{"property_type": "residential_house", "zip_code": "85743", "building_age_years": 25, "season": "spring"}'
 ```
 
