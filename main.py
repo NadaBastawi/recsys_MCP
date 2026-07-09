@@ -12,11 +12,18 @@ import pandas as pd
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel
+import sentry_sdk
 
 from recommender import HybridRecommender
 from monitoring.logger import PredictionLogger
 
 load_dotenv()
+
+sentry_sdk.init(
+    dsn="https://976a0582ae46c3a6817571521e4e2e98@o4511707022688256.ingest.de.sentry.io/4511707097006160",
+    send_default_pii=True,
+    traces_sample_rate=1.0,
+)
 
 logger = logging.getLogger(__name__)
 

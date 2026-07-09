@@ -14,6 +14,7 @@ Faker==40.15.0
 
 # ── API ───────────────────────────────────────────────────────────────────────
 fastapi==0.136.1
+sentry-sdk==2.24.0
 uvicorn==0.46.0
 pydantic==2.13.3
 httpx>=0.27.0          # MCP server HTTP client + async API calls

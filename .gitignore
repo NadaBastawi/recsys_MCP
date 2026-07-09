@@ -6,3 +6,5 @@ __pycache__/
 .ipynb_checkpoints/
 models/torco_recommender.pkl
 .env
+prediction_logs.json
+monitoring/prediction_logs.json
