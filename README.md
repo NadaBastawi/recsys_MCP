@@ -1,5 +1,7 @@
 # TORCO Pest Control — AI Recommendation System + MCP Server
 
+[![codecov](https://codecov.io/gh/NadaBastawi/recsys_MCP/branch/main/graph/badge.svg)](https://codecov.io/gh/NadaBastawi/recsys_MCP)
+
 > **End-to-end ML project:** Hybrid recommendation engine for pest control service personalization, exposed as a REST API and MCP server for AI agent integration.
 
 ---
